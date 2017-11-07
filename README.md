@@ -12,14 +12,14 @@ Project Information:
 * **Author:** Rafael Oliveira Silva
 * **Blog:** [raffs.com.br](https://raffs.com.br/)
 
-# Setup
+## Setup
 
-## Requirements
+### Requirements
 
 * Ruby
 * Rubygem
 
-## Installation
+#### Installation
 
 Install the ccsh gem 
 ```sh
@@ -28,7 +28,7 @@ gem install ccsh
 
 *NOTE: the ccsh are not published on the gem server yet*
 
-## Create host file
+#### Create host file
 
 By default the ccsh command will load the file from ```~/.cssh/host.yaml```. The file path could change using the 
 ```ccsh -h path/to/HOSTFILE``` command.
@@ -64,7 +64,7 @@ hosts:
       - dbserver
 ```
 
-## Start the console
+### Start the console
 
 Start the ccsh console and server group name such as ```all``` or ```webserver```
 ```sh
