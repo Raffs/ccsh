@@ -5,5 +5,7 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 gem "net-ssh", ">= 4.2.0"
 
 group(:test) do 
-    # gem "name", "version_exp"
+    gem "bundler", "~> 1.16"
+    gem "rake", "~> 10.0"
+    gem "rspec", "~> 3.0"
 end
