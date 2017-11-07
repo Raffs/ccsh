@@ -7,6 +7,11 @@ machine instances.
 ccsh will read the servers from the **host** file and create an interactive shell
 for running commands on all selected servers
 
+Project Information:
+* **Status:** Development
+* **Author:** Rafael Oliveira Silva
+* **Blog:** [raffs.com.br](https://raffs.com.br/)
+
 # Setup
 
 ## Requirements
@@ -73,28 +78,28 @@ ccsh> hostname
 * [Github Issues](https://github.com/raffs/ccsh/issues)
 * [Pull Requests](https://github.com/raffs/ccsh/pulls)
 
-## Testing
+### Testing
 
 To run the rspec spec run:
 ```sh
 rake spec
 ```
 
-## Build
+### Build
 
 To build the ccsh gem package run:
 ```sh
 gem build ccsh.gemspec
 ```
 
-## Installing local gem
+### Installing local gem
 
 To install the generated gem package run: 
 ```sh
 gem install gem-VERSION.gem
 ```
 
-## Process
+### Process
 
 * **Fork** the repository
 * Create a **branch** following the pattern: feature/<FEATURE_SHORT_DESCRIPTION>
