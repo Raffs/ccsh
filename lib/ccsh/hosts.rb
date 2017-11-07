@@ -27,7 +27,7 @@ module CCSH
                 hostfile['hosts'].each do |h|
                     host = Host.new
 
-                    host.name = CCSH::Utils.get_options('name', h, @defaults['name'])                    
+                    host.name = CCSH::Utils.get_options('name', h, @defaults['name'])
                     host.user = CCSH::Utils.get_options('user', h, @defaults['user'])
                     host.port = CCSH::Utils.get_options('port', h, @defaults['port'])
 
