@@ -1,0 +1,31 @@
+*.gem
+*.rbc
+/.config
+/.idea
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+## Documentation cache and generated files:
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+
+## Environment normalization:
+/.bundle/
+
+Gemfile.lock
+Gemfile.local
+.ruby-version
+.ruby-gemset
+
+.rvmrc
+
+.vagrant/
+.byebug_history
