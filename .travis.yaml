@@ -1,0 +1,8 @@
+language: ruby
+script: rake travis
+rvm:
+  - 2.0
+  - 2.4
+before_install:
+  - gem update --system
+  - gem --version

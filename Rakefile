@@ -7,20 +7,28 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'ccsh'
 
+task :test do
+    Rake::Task['test:spec'].invoke
+end
+
+
+task :spec do
+    Rake::Task['test:spec'].invoke
+end
+
 ## ================================================
-#  Start the rspec test
+#  Running the travis-ci
 ## ================================================
-RSpec::Core::RakeTask.new(:test) do |task|
-    task.pattern = Dir.glob('spec/**/*_spec.rb')
-    task.rspec_opts = '--format documentation'
+desc "building gem package"
+task :travis do
+    Rake::Task['test:spec'].invoke
 end
 
 ## ================================================
 #  Running the gem building
 ## ================================================
-desc "Building"
+desc "building gem package"
 task :build do
-    puts "Building the ccsh for #{CCSH::VERSION}"
     system "gem build ccsh.gemspec"
 end
 
@@ -28,10 +36,21 @@ end
 #  Publishing the generated gem into to gem
 #  Rubygem repository. 
 ## ================================================
-desc "Publishing gem file"
-task :push do
-    puts "Publishig"
+desc "Install local"
+task :install_local do
     system "gem install ccsh-#{CCSH::VERSION}.gem"
+end
+
+
+namespace :test do
+
+    ## ================================================
+    #  Start the rspec test
+    ## ================================================
+    RSpec::Core::RakeTask.new(:spec) do |task|
+        task.pattern = Dir.glob('spec/**/*_spec.rb')
+        task.rspec_opts = '--format documentation'
+    end
 end
 
 task :default => :spec
