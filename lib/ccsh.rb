@@ -22,6 +22,22 @@ module CCSH
         self.start_cli CCSH::Hosts.new.parser!(filename).filter_by(targets)
     end
 
+    def self.with_info
+        cmd_start = Time.now
+        cmd = yield
+        cmd_end = Time.now
+
+        info = {
+            'rc'   => cmd.return_code,
+            'time' => cmd_end - cmd_start,
+        }.inspect
+
+        STDOUT.puts ">>> #{cmd.hostname} #{info}"
+        STDERR.puts cmd.stderr if cmd.stderr != nil && cmd.stderr != ''
+        STDOUT.puts cmd.stdout if cmd.stdout != nil && cmd.stdout != ''
+        STDOUT.puts
+    end
+
     def self.start_cli(hosts)
         quit = false
         loop do
@@ -37,22 +53,25 @@ module CCSH
                     if command == 'clear'
                         CCSH::Utils.clear_console
                     elsif command == 'reset'
-                        system('reset')
+                        CCSH::Utils.reset_console
                     else
+                        threads = []
                         hosts.each do |host|
-                            r = host.run command
-                            return_code = "rc: #{r.return_code}" if r.return_code != nil
+                            threads << Thread.new do
 
-                            puts ">>> #{r.hostname} [#{return_code}]"
-                            puts r.stderr if r.stderr != nil && r.stderr != ''
-                            puts r.stdout if r.stdout != nil && r.stdout != ''
-                            puts
+                                with_info do
+                                    host.run command
+                                end
+                            end
                         end
+
+
+                        threads.each(&:join)
                     end
                 end
             rescue Exception => exception
-                puts exception.message
-                puts
+                STDERR.puts exception.message
+                STDERR.puts
                 raise exception
             end
         end

@@ -10,11 +10,11 @@ module CCSH
         end
 
         def self.debug(msg)
-            puts "DEBUG", msg if ENV['CCSH_DEBUG'] == "true"
+            STDOUT.puts "DEBUG", msg if ENV['CCSH_DEBUG'] == "true"
         end
 
         def self.verbose(msg)
-            puts msg if ENV['CCSH_VERBOSE'] == "true"
+            STDOUT.puts msg if ENV['CCSH_VERBOSE'] == "true"
         end
 
         def self.handle_signals
@@ -28,14 +28,18 @@ module CCSH
         end
 
         def self.exit_console(code, msg = nil)
-            puts msg if msg != nil
+            STDOUT.puts msg if msg != nil
     
-            puts "\nBye..."
+            STDOUT.puts "\nBye..."
             exit code || 0
         end
     
         def self.clear_console
             printf "\e[H\e[2J"
+        end
+
+        def self.clear_console
+            printf("\033c");
         end
     end
 end

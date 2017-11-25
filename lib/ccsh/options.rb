@@ -35,7 +35,11 @@ module CCSH
                 opts.on("-k", "--[no-]check", "Check host connection before continuing") do |k|
                     options.check = k
                 end
-    
+
+                opts.on("-m", "--max-threads", "Define the max threads limits (default: total host number)") do |max|
+                    options.max_threads = max
+                end
+
                 opts.on("-o", "--output FILEPATH",
                         "Save the output on specific file, rather then the default log system") do |out|
                     options.output = out

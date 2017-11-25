@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
     s.files       = Dir['bin/*'] +
                     Dir['lib/**/*.rb']
-    s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+    s.executables = s.files.grep(%r{^bin/ccsh}) { |f| File.basename(f) }
 
     s.required_ruby_version = "~> 2.0"
 

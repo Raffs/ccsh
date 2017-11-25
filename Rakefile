@@ -7,22 +7,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'ccsh'
 
-task :test do
-    Rake::Task['test:spec'].invoke
-end
-
-
-task :spec do
-    Rake::Task['test:spec'].invoke
-end
-
 ## ================================================
-#  Running the travis-ci
+#  Alias to run tests
 ## ================================================
-desc "building gem package"
-task :travis do
-    Rake::Task['test:spec'].invoke
-end
+task :test   { Rake::Task['test:spec'].invoke }
+task :spec   { Rake::Task['test:spec'].invoke }
+task :travis { Rake::Task['test:spec'].invoke }
 
 ## ================================================
 #  Running the gem building
@@ -33,14 +23,22 @@ task :build do
 end
 
 ## ================================================
-#  Publishing the generated gem into to gem
-#  Rubygem repository. 
+#  Install the builded gem locally
 ## ================================================
 desc "Install local"
 task :install_local do
     system "gem install ccsh-#{CCSH::VERSION}.gem"
 end
 
+## ================================================
+#  Publishing the generated gem into to gem
+#  Rubygem repository. 
+## ================================================
+desc "Deploy gem locally"
+task :deploy_local do
+    Rake::Task['build'].invoke
+    Rake::Task['install_local'].invoke
+end
 
 namespace :test do
 

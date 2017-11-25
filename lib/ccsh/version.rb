@@ -1,7 +1,7 @@
 module CCSH
 
     # ccsh relased version
-    VERSION   = "0.0.1"
+    VERSION   = "0.0.2"
 
     # the git commit tag number that generate this build
     BUILD_NUMBER = "dev-#{VERSION}"
