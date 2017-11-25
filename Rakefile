@@ -10,9 +10,20 @@ require 'ccsh'
 ## ================================================
 #  Alias to run tests
 ## ================================================
-task :test   { Rake::Task['test:spec'].invoke }
-task :spec   { Rake::Task['test:spec'].invoke }
-task :travis { Rake::Task['test:spec'].invoke }
+desc "start unit tests"
+task :test do
+    Rake::Task['test:spec'].invoke
+end
+
+desc "start unit tests"
+task :spec do
+    Rake::Task['test:spec'].invoke
+end
+
+desc "start unit tests"
+task :travis do
+    Rake::Task['test:spec'].invoke
+end
 
 ## ================================================
 #  Publishing the generated gem into to gem
