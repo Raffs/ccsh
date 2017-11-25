@@ -1,5 +1,8 @@
 # Ccsh
 
+[![Build Status](https://travis-ci.org/raffs/ccsh.svg?branch=master)](https://travis-ci.org/raffs/ccsh)
+
+
 ccsh is an interactive shell console connected into multiple servers, the intent
 of this interface is to simplify the need to run very simple task on the 
 machine instances. 
