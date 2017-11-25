@@ -10,11 +10,11 @@ module CCSH
         end
 
         def self.debug(msg)
-            STDOUT.puts "DEBUG", msg if ENV['CCSH_DEBUG'] == "true"
+            puts "DEBUG", msg if ENV['CCSH_DEBUG'] == "true"
         end
 
         def self.verbose(msg)
-            STDOUT.puts msg if ENV['CCSH_VERBOSE'] == "true"
+            puts msg if ENV['CCSH_VERBOSE'] == "true"
         end
 
         def self.handle_signals
@@ -28,9 +28,9 @@ module CCSH
         end
 
         def self.exit_console(code, msg = nil)
-            STDOUT.puts msg if msg != nil
+            puts msg if msg != nil
     
-            STDOUT.puts "\nBye..."
+            puts "\nBye..."
             exit code || 0
         end
     

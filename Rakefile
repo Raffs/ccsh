@@ -15,6 +15,16 @@ task :spec   { Rake::Task['test:spec'].invoke }
 task :travis { Rake::Task['test:spec'].invoke }
 
 ## ================================================
+#  Publishing the generated gem into to gem
+#  Rubygem repository. 
+## ================================================
+desc "Deploy gem locally"
+task :deploy_local do
+    Rake::Task['build'].invoke
+    Rake::Task['install_local'].invoke
+end
+
+## ================================================
 #  Running the gem building
 ## ================================================
 desc "building gem package"
@@ -28,16 +38,6 @@ end
 desc "Install local"
 task :install_local do
     system "gem install ccsh-#{CCSH::VERSION}.gem"
-end
-
-## ================================================
-#  Publishing the generated gem into to gem
-#  Rubygem repository. 
-## ================================================
-desc "Deploy gem locally"
-task :deploy_local do
-    Rake::Task['build'].invoke
-    Rake::Task['install_local'].invoke
 end
 
 namespace :test do

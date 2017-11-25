@@ -32,10 +32,10 @@ module CCSH
             'time' => cmd_end - cmd_start,
         }.inspect
 
-        STDOUT.puts ">>> #{cmd.hostname} #{info}"
+        puts ">>> #{cmd.hostname} #{info}"
         STDERR.puts cmd.stderr if cmd.stderr != nil && cmd.stderr != ''
-        STDOUT.puts cmd.stdout if cmd.stdout != nil && cmd.stdout != ''
-        STDOUT.puts
+        puts cmd.stdout if cmd.stdout != nil && cmd.stdout != ''
+        puts
     end
 
     def self.start_cli(hosts)
