@@ -61,7 +61,7 @@ module CCSH
 
                                 with_info do
                                     host.run command
-                                end
+                                end 
                             end
                         end
 

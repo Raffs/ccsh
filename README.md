@@ -96,8 +96,10 @@ gem build ccsh.gemspec
 
 To install the generated gem package run: 
 ```sh
-gem install gem-VERSION.gem
+gem install_local gem-VERSION.gem
 ```
+
+Optionally you can run the *build* and *install locally* with the `rake deploy_local`
 
 ### Process
 
