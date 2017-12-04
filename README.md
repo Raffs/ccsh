@@ -49,7 +49,9 @@ defaults:
   user: user
   password: password
   private_key: ~/.ssh/id_rsa
-  ssh_options: []
+  ssh_options: 
+    timeout: 720
+    host_key: 'ssh-rsa'
 
 # list of host file
 hosts:
