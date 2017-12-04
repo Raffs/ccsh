@@ -1,5 +1,26 @@
 module CCSH
     module Utils
+        def self.merge_defaults(defaults)
+            defaultsValues = {
+                'user'        => 'root',
+                'port'        => '22',
+                'private_key' => '~/.ssh/id_rsa',
+            }
+            defaultsValues.merge!(defaults) if defaults != nil
+
+            ssh_options = {
+                'timeout' => 720,
+                'ssh-rsa' => 'ssh-rsa',
+            }
+
+            if defaults['ssh_options'] != nil
+                defaultsValues['ssh_options'] = ssh_options.merge!(defaults['ssh_options'])
+            else
+                defaultsValues['ssh_options'] = ssh_options
+            end
+
+            return defaultsValues
+        end
 
         def self.get_options(item, object, default)
             if object.key? item
@@ -7,6 +28,10 @@ module CCSH
             end
 
             return default
+        end
+
+        def self.valid_ssh(options)
+            return true
         end
 
         def self.debug(msg)
@@ -33,7 +58,7 @@ module CCSH
             puts "\nBye..."
             exit code || 0
         end
-    
+
         def self.clear_console
             printf "\e[H\e[2J"
         end

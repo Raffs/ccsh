@@ -21,8 +21,8 @@ module CCSH
 
                 hostfile = YAML.load_file(file.realpath)
 
-                @defaults = hostfile['defaults']
                 @hosts = []
+                @defaults = CCSH::Utils.merge_defaults(hostfile['defaults'])
 
                 hostfile['hosts'].each do |h|
                     host = Host.new

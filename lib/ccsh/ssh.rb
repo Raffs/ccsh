@@ -20,6 +20,7 @@ module CCSH
             attr_accessor :port
             attr_accessor :password
             attr_accessor :private_key
+            attr_accessor :options
 
             attr_accessor :stdout
             attr_accessor :stderr
@@ -35,10 +36,17 @@ module CCSH
             end
 
             def execute!
-                # @stdout = '-rw-r--r--  1 raffs  staff    52 Nov  6 01:23 Gemfile'
-                # @stderr = nil
-                # @return_code = 0
-                Net::SSH.start(@hostname, @user, :password => @password) do |ssh|
+                @options = {
+                    :password => @password,
+                    :keys     => [@private_key],
+                    :port     => @port,
+                    :host_key => @options['host_key'],
+                    :timeout  => @options['timeout'],
+                }.select {|key,value| value != nil}
+
+                raise "something" unless CCSH::Utils.valid_ssh(@options)
+
+                Net::SSH.start(@hostname, @user, @options) do |ssh|
                     ssh.open_channel do |ch|
                         ch.exec @command do |ch, success|
                             raise "Could execute command #{command} on #{host}" unless success

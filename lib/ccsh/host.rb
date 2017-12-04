@@ -29,6 +29,7 @@ module CCSH
                 ssh.options = @ssh_options
                 ssh.password = @password
                 ssh.private_key = @private_key
+                ssh.options = @ssh_options
 
                 ssh.command = command
                 ssh.hostname = @hostname || @name
