@@ -46,7 +46,7 @@ module CCSH
             Signal.trap('INT') do
                 self.exit_console 0
             end
-    
+
             Signal.trap('TERM') do
                 self.exit_console 0
             end
@@ -54,7 +54,7 @@ module CCSH
 
         def self.exit_console(code, msg = nil)
             puts msg if msg != nil
-    
+
             puts "\nBye..."
             exit code || 0
         end
