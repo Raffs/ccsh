@@ -4,8 +4,8 @@
 
 
 ccsh is an interactive shell console connected into multiple servers, the intent
-of this interface is to simplify the need to run very simple task on the 
-machine instances. 
+of this interface is to simplify the need to run very simple task on the
+machine instances.
 
 ccsh will read the servers from the **host** file and create an interactive shell
 for running commands on all selected servers
@@ -24,16 +24,14 @@ Project Information:
 
 #### Installation
 
-Install the ccsh gem 
+Install the ccsh gem
 ```sh
 gem install ccsh
 ```
 
-*NOTE: the ccsh are not published on the gem server yet*
-
 #### Create host file
 
-By default the ccsh command will load the file from ```~/.cssh/host.yaml```. The file path could change using the 
+By default the ccsh command will load the file from ```~/.cssh/host.yaml```. The file path could change using the
 ```ccsh -h path/to/HOSTFILE``` command.
 
 ```yaml
@@ -49,7 +47,7 @@ defaults:
   user: user
   password: password
   private_key: ~/.ssh/id_rsa
-  ssh_options: 
+  ssh_options:
     timeout: 720
     host_key: 'ssh-rsa'
 
@@ -99,7 +97,7 @@ gem build ccsh.gemspec
 
 ### Installing local gem
 
-To install the generated gem package run: 
+To install the generated gem package run:
 ```sh
 gem install_local gem-VERSION.gem
 ```
