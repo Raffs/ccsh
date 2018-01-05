@@ -9,7 +9,7 @@ module CCSH
             # default values
             user_home = File.expand_path('~')
 
-            options.config  = "#{user_home}/ccsh/"
+            options.config  = "#{user_home}/.ccsh/config.yaml"
             options.hosts   = "#{user_home}/.ccsh/hosts.yaml"
             options.output  = ""
             options.debug   = false
@@ -22,7 +22,7 @@ module CCSH
                 opts.separator ""
                 opts.separator "Options: "
 
-                opts.on("-c", "--config CONFIG_FILE", "Configuration file (default: ~/ccsh/default/yaml)") do |cfg|
+                opts.on("-c", "--config CONFIG_FILE", "Configuration file (default: ~/.ccsh/config.yaml)") do |cfg|
                     options.config = cfg
                 end
 
@@ -36,15 +36,6 @@ module CCSH
 
                 opts.on("-k", "--[no-]check", "Check host connection before continuing") do |k|
                     options.check = k
-                end
-
-                opts.on("-m", "--max-threads", "Define the max threads limits (default: total host number)") do |max|
-                    options.max_threads = max
-                end
-
-                opts.on("-o", "--output FILEPATH",
-                        "Save the output on specific file, rather then the default log system") do |out|
-                    options.output = out
                 end
 
                 opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
