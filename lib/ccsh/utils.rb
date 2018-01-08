@@ -63,7 +63,7 @@ module CCSH
             printf "\e[H\e[2J"
         end
 
-        def self.clear_console
+        def self.reset_console
             printf("\033c");
         end
     end

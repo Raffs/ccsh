@@ -15,6 +15,7 @@ module CCSH
             options.debug   = false
             options.verbose = false
             options.check   = false
+            options.output  = nil
 
             # open parser
             opt_parser = OptionParser.new do |opts|
@@ -36,6 +37,10 @@ module CCSH
 
                 opts.on("-k", "--[no-]check", "Check host connection before continuing") do |k|
                     options.check = k
+                end
+
+                opts.on("-o", "--output FILEPATH", "Write the interaction into a file") do |out|
+                    options.output = out
                 end
 
                 opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|

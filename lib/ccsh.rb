@@ -19,10 +19,11 @@ module CCSH
         filename = options[:hosts]
         targets = options[:targets]
 
-        self.start_cli CCSH::Hosts.new.parser!(filename).filter_by(targets)
+        hosts = CCSH::Hosts.new.parser!(filename).filter_by(targets)
+        self.start_cli(hosts, options)
     end
 
-    def self.with_info
+    def self.with_info(options)
         cmd_start = Time.now
         cmd = yield
         cmd_end = Time.now
@@ -32,13 +33,29 @@ module CCSH
             'time' => cmd_end - cmd_start,
         }.inspect
 
-        puts ">>> #{cmd.hostname} #{info}"
+        prompt = ">>> #{cmd.hostname} #{info}"
+
+        puts prompt
         STDERR.puts cmd.stderr if cmd.stderr != nil && cmd.stderr != ''
         puts cmd.stdout if cmd.stdout != nil && cmd.stdout != ''
         puts
+
+        if options[:output] != nil
+            begin
+                file_handler = File.new(options[:output], "a+")
+
+                file_handler.write("#{prompt}\n")
+                file_handler.write("ERROR: #{cmd.stderr}") if cmd.stderr != nil && cmd.stderr != ''
+                file_handler.write("#{cmd.stdout}\n") if cmd.stdout != nil && cmd.stdout != ''
+            rescue Exception => e
+                puts "WARNING: An error occur when trying to write the output to file: #{options[:output]}. "
+                puts "WARNING: Thefore, the output is not being stored"
+                puts "WARNING: ERROR: #{e.message}"
+            end
+        end
     end
 
-    def self.start_cli(hosts)
+    def self.start_cli(hosts, options)
         quit = false
         loop do
             begin
@@ -59,7 +76,7 @@ module CCSH
                         hosts.each do |host|
                             threads << Thread.new do
 
-                                with_info do
+                                info = with_info(options) do
                                     host.run command
                                 end
                             end

@@ -1,5 +1,5 @@
 module CCSH
-    class Host        
+    class Host
         attr_accessor :name
         attr_accessor :port
         attr_accessor :user
