@@ -14,6 +14,7 @@ Project Information:
 * **Status:** Development
 * **Author:** Rafael Oliveira Silva
 * **Blog:** [raffs.com.br](https://raffs.com.br/)
+* **Rubygem**: [gems/ccsh](https://rubygems.org/gems/ccsh)
 
 ## Setup
 
