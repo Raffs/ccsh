@@ -1,6 +1,7 @@
 # Ccsh
 
 [![Build Status](https://travis-ci.org/raffs/ccsh.svg?branch=master)](https://travis-ci.org/raffs/ccsh)
+[![Gem Version](https://badge.fury.io/rb/ccsh.svg)](https://badge.fury.io/rb/ccsh)
 
 
 ccsh is an interactive shell console connected into multiple servers, the intent
