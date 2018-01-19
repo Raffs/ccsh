@@ -30,6 +30,7 @@ module CCSH
                 end
 
                 opts.on("-d", "--[no-]debug", "Run Debug mode") do |d|
+                    options.verbose = d
                     options.debug = d
                 end
 
@@ -46,7 +47,7 @@ module CCSH
                 end
 
                 opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-                    options.show_hosts = true
+                    options.show_hosts = v
                     options.verbose = v
                 end
 
