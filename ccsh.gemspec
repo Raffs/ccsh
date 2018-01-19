@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
     s.date        = '2017-11-03'
     s.summary     = 'Interactive multiple client shell command'
     s.description = 'Interactive shell console, connected into multiple clients'
-    s.authors     = ['Rafael Silva <raffs>']
+    s.authors     = ['Rafael Silva - raffs']
     s.email       = ['rafaeloliveira.cs@gmail.com']
     s.homepage    = 'https://github.com/raffs/ccsh'
     s.license     = 'Apache-2.0'
