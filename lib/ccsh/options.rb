@@ -41,7 +41,7 @@ module CCSH
                     options.check = k
                 end
 
-                opts.on("-o", "--output FILEPATH", "Write the interaction into a file") do |out|
+                opts.on("-o", "--output FILEPATH", "Write all the interaction into an output file") do |out|
                     options.output = out
                 end
 
@@ -55,24 +55,22 @@ module CCSH
                 end
 
                 opts.on("-t", "--max-threads MAX_THREADS",
-                        "Define the maxinum number of threads to connected the system: (default: Number of hosts)") do |max_threads|
+                        "Define the maxinum number of threads (by default: the ammount of selected hosts)") do |max_threads|
 
                     begin
                         if not max_threads =~ /\d+/
-                            raise "The define '#{max_threads}' max_threads is not a valid number"
+                            raise "The value '#{max_threads}' is not a valid value to max_threads options"
                         end
 
                         max_threads = max_threads.to_i
                         if max_threads < 0
-                            raise "The #{max_threads} should be positive number"
+                            raise "max_threads value should be a positive number instead of '#{max_threads}'"
                         end
 
                         options.max_threads = max_threads
                     rescue Exception => e
-                        raise "ERROR: #{e.message}"
+                        raise e.message
                     end
-
-
                 end
 
                 opts.on("--version", "Display version") do |v|

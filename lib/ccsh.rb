@@ -9,18 +9,29 @@ module CCSH
     require 'ccsh/ssh.rb'
 
     def self.execute!
-        options = CCSH::Options.parse_options ARGV
+        begin
+            options = CCSH::Options.parse_options ARGV
 
-        ENV['CCSH_DEBUG']   = "true" if options[:debug]
-        ENV['CCSH_VERBOSE'] = "true" if options[:verbose]
+            ENV['CCSH_DEBUG']   = "true" if options[:debug]
+            ENV['CCSH_VERBOSE'] = "true" if options[:verbose]
 
-        raise "You must to specified a hostname or group" if options[:targets].empty?
+            raise "You must to specified a hostname or group" if options[:targets].empty?
 
-        filename = options[:hosts]
-        targets = options[:targets]
+            filename = options[:hosts]
+            targets = options[:targets]
 
-        hosts = CCSH::Hosts.new.parser!(filename).filter_by(targets)
-        self.start_cli(hosts, options)
+            hosts = CCSH::Hosts.new.parser!(filename).filter_by(targets)
+            self.start_cli(hosts, options)
+
+        rescue Exception => e
+            CCSH::Utils.debug "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
+            CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
+
+            puts "An error occur and system exit with the following message: "
+            puts "  #{e.message}"
+
+            exit 1
+        end
     end
 
     def self.with_info(options)
@@ -50,10 +61,11 @@ module CCSH
             rescue Exception => e
                 puts "WARNING: An error occur when trying to write the output to file: #{options[:output]}. "
                 puts "WARNING: Thefore, the output is not being stored"
-                puts "WARNING: ERROR: #{e.message}"
+                puts "WARNING: Error message: #{e.message}"
             end
         end
     end
+
 
     def self.start_cli(hosts, options)
         CCSH::Utils.display_hosts(hosts) if options[:show_hosts]
