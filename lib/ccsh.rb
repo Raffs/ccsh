@@ -24,13 +24,17 @@ module CCSH
             self.start_cli(hosts, options)
 
         rescue Exception => e
-            CCSH::Utils.debug "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
-            CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
+            if not e.message == 'exit'
+                CCSH::Utils.debug "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
+                CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
 
-            puts "An error occur and system exit with the following message: "
-            puts "  #{e.message}"
+                puts "An error occur and system exit with the following message: "
+                puts "  #{e.message}"
 
-            exit 1
+                exit!
+            end
+
+            exit
         end
     end
 

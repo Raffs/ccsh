@@ -58,7 +58,7 @@ module CCSH
         ##
         # Display a message, if debug mode is enabled
         def self.debug(msg)
-            puts "DEBUG", msg if ENV['CCSH_DEBUG'] == "true"
+            puts "[DEBUG] #{msg}" if ENV['CCSH_DEBUG'] == "true"
         end
 
         ##
