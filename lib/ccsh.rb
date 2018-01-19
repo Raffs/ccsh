@@ -56,6 +56,8 @@ module CCSH
     end
 
     def self.start_cli(hosts, options)
+        CCSH::Utils.display_hosts(hosts) if options[:show_hosts]
+
         quit = false
         loop do
             begin

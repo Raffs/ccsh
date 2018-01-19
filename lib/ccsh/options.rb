@@ -9,13 +9,14 @@ module CCSH
             # default values
             user_home = File.expand_path('~')
 
-            options.config  = "#{user_home}/.ccsh/config.yaml"
-            options.hosts   = "#{user_home}/.ccsh/hosts.yaml"
-            options.output  = ""
-            options.debug   = false
-            options.verbose = false
-            options.check   = false
-            options.output  = nil
+            options.config     = "#{user_home}/.ccsh/config.yaml"
+            options.hosts      = "#{user_home}/.ccsh/hosts.yaml"
+            options.output     = ""
+            options.debug      = false
+            options.verbose    = false
+            options.check      = false
+            options.output     = nil
+            options.show_hosts = false
 
             # open parser
             opt_parser = OptionParser.new do |opts|
@@ -45,6 +46,10 @@ module CCSH
 
                 opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
                     options.verbose = v
+                end
+
+                opts.on("--show-hosts", "Output the filtered hosts") do |show_hosts|
+                    options.show_hosts = show_hosts
                 end
 
                 opts.on("--version", "Display version") do |v|
