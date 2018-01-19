@@ -9,14 +9,15 @@ module CCSH
             # default values
             user_home = File.expand_path('~')
 
-            options.config     = "#{user_home}/.ccsh/config.yaml"
-            options.hosts      = "#{user_home}/.ccsh/hosts.yaml"
-            options.output     = ""
-            options.debug      = false
-            options.verbose    = false
-            options.check      = false
-            options.output     = nil
-            options.show_hosts = false
+            options.config      = "#{user_home}/.ccsh/config.yaml"
+            options.hosts       = "#{user_home}/.ccsh/hosts.yaml"
+            options.output      = ""
+            options.debug       = false
+            options.verbose     = false
+            options.check       = false
+            options.output      = nil
+            options.show_hosts  = false
+            options.max_threads = 0
 
             # open parser
             opt_parser = OptionParser.new do |opts|
@@ -45,11 +46,33 @@ module CCSH
                 end
 
                 opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+                    options.show_hosts = true
                     options.verbose = v
                 end
 
                 opts.on("--show-hosts", "Output the filtered hosts") do |show_hosts|
                     options.show_hosts = show_hosts
+                end
+
+                opts.on("-t", "--max-threads MAX_THREADS",
+                        "Define the maxinum number of threads to connected the system: (default: Number of hosts)") do |max_threads|
+
+                    begin
+                        if not max_threads =~ /\d+/
+                            raise "The define '#{max_threads}' max_threads is not a valid number"
+                        end
+
+                        max_threads = max_threads.to_i
+                        if max_threads < 0
+                            raise "The #{max_threads} should be positive number"
+                        end
+
+                        options.max_threads = max_threads
+                    rescue Exception => e
+                        raise "ERROR: #{e.message}"
+                    end
+
+
                 end
 
                 opts.on("--version", "Display version") do |v|

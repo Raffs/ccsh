@@ -74,17 +74,26 @@ module CCSH
                     elsif command == 'reset'
                         CCSH::Utils.reset_console
                     else
-                        threads = []
-                        hosts.each do |host|
-                            threads << Thread.new do
-
-                                info = with_info(options) do
-                                    host.run command
-                                end
-                            end
+                        if ((options.max_threads == 0) || (options.max_threads > hosts.length))
+                            options.max_threads = hosts.length
                         end
 
-                        threads.each(&:join)
+                        CCSH::Utils.debug "Using #{options.max_threads} maximum of threads"
+
+                        hosts.each_slice(options.max_threads) do |batch_hosts|
+                            threads = []
+
+                            batch_hosts.each do |host|
+                                threads << Thread.new do
+
+                                    info = with_info(options) do
+                                        host.run command
+                                    end
+                                end
+                            end
+
+                            threads.each(&:join)
+                        end
                     end
                 end
             rescue Exception => exception
