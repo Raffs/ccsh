@@ -71,11 +71,23 @@ hosts:
 
 ### Start the console
 
-Start the ccsh console and server group name such as ```all``` or ```webserver```
-```sh
-$ ccsh webserver
+Now, the hosts file are set, we can start the ccsh console given the group name
+such as ```all``` or ```webserver```.
 
-ccsh> hostname
+```bash
+$ ccsh webserver
+```
+
+connected to the ccsh console we can type the commands we want to perform on
+each connected host.
+
+```bash
+ccsh> uptime
+>>> node01.example.com {"rc"=>0, "time"=>2.941396}
+ 03:13:20 up 85 days, 15:14,  1 user,  load average: 0.21, 0.07, 0.03
+
+>>> node02.example {"rc"=>0, "time"=>2.941975}
+ 03:13:20 up 85 days, 11:14,  1 user,  load average: 0.33, 0.10, 0.07
 ```
 
 ## Contributing
