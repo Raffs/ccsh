@@ -73,6 +73,7 @@ module CCSH
 
     def self.start_cli(hosts, options)
         CCSH::Utils.display_hosts(hosts) if options[:show_hosts]
+        CCSH::Utils.display_hosts_verbosity(hosts) if options[:verbose]
 
         quit = false
         loop do
@@ -100,8 +101,30 @@ module CCSH
                             threads = []
 
                             batch_hosts.each do |host|
-                                threads << Thread.new do
+                                if command =~ /^(.*)+sudo/
+                                    if host.sudo_enabled != true
+                                        msg = "WARN: You cannot run sudo on the host #{host.hostname}, please enable sudo mode for this hosts"
+                                        CCSH::Utils.verbose(msg)
+                                        next
+                                    end
 
+                                    if host.sudo_password == nil
+                                        if options[:ask_pass]
+                                            printf "[#{host.hostname}] Enter sudo password for #{host.user}: "
+                                            passwd = STDIN.noecho(&:gets).chomp
+
+                                            host.sudo_password = passwd
+                                        else
+                                            error_msg = """
+                                                [#{host.hostname}] sudo password was not provided use (--ask-pass) to ask the sudo password
+                                            """
+
+                                            raise error_msg.gsub!(/\s+/, ' ')
+                                        end
+                                    end
+                                end
+
+                                threads << Thread.new do
                                     info = with_info(options) do
                                         host.run command
                                     end

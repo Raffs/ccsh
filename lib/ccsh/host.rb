@@ -9,6 +9,8 @@ module CCSH
         attr_accessor :private_key
         attr_accessor :ssh_options
         attr_accessor :timeout
+        attr_accessor :sudo_enabled
+        attr_accessor :sudo_password
 
         def initialize
             @name = ''
@@ -19,6 +21,8 @@ module CCSH
             @password = nil
             @private_key = nil
             @ssh_options = []
+            @sudo_enabled = false
+            @sudo_password = @password
         end
 
         def run(command)
@@ -30,6 +34,8 @@ module CCSH
                 ssh.password = @password
                 ssh.private_key = @private_key
                 ssh.options = @ssh_options
+                ssh.enable_sudo = @sudo_enabled
+                ssh.sudo_password = @sudo_password
 
                 ssh.command = command
                 ssh.hostname = @hostname || @name

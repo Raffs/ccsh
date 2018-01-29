@@ -6,9 +6,11 @@ module CCSH
         # parameters.
         def self.merge_defaults(defaults)
             defaultsValues = {
-                'user'        => 'root',
-                'port'        => '22',
-                'private_key' => '~/.ssh/id_rsa',
+                'user'          => 'root',
+                'port'          => '22',
+                'sudo_enabled'  => false,
+                'sudo_password' => nil,
+                'private_key'   => '~/.ssh/id_rsa',
             }
             defaultsValues.merge!(defaults) if defaults != nil
 
@@ -45,7 +47,13 @@ module CCSH
             hosts.each do |host|
                 puts "+ Server #{host.name}: #{host.user}@#{host.hostname} => Groups: #{host.groups}"
             end
+            puts
+        end
 
+        def self.display_hosts_verbosity(hosts)
+            hosts.each do |host|
+                CCSH::Utils::verbose("sudo mode enable to host: #{host.hostname}") if host.sudo_enabled
+            end
             puts
         end
 
@@ -64,7 +72,7 @@ module CCSH
         ##
         # Verbosely display a message, if verbose mode is enabled
         def self.verbose(msg)
-            puts msg if ENV['CCSH_VERBOSE'] == "true"
+            puts "[verbose] #{msg}" if ENV['CCSH_VERBOSE'] == "true"
         end
 
         ##

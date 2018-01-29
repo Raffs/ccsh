@@ -21,6 +21,8 @@ module CCSH
             attr_accessor :password
             attr_accessor :private_key
             attr_accessor :options
+            attr_accessor :enable_sudo
+            attr_accessor :sudo_password
 
             attr_accessor :stdout
             attr_accessor :stderr
@@ -33,6 +35,10 @@ module CCSH
                 @options  = []
                 @stdout = ''
                 @stderr = ''
+
+                @enable_sudo      = false
+                @sudo_user        = 'root'
+                @sudo_password    = nil
             end
 
             def execute!
@@ -48,12 +54,13 @@ module CCSH
 
                 Net::SSH.start(@hostname, @user, @options) do |ssh|
                     ssh.open_channel do |ch|
-                        ch.exec @command do |ch, success|
-                            raise "Could execute command #{command} on #{host}" unless success
-                        end
-
                         ch.on_data do |c, data|
-                            @stdout << data
+                            if @enable_sudo && data =~ /^\[sudo\] password for /
+                                # send the password
+                                ch.send_data "#{@sudo_password}\n"
+                            else
+                                @stdout << data
+                            end
                         end
 
                         ch.on_extended_data do |c, type, data|
@@ -63,12 +70,23 @@ module CCSH
                         ch.on_request("exit-status") do |c,data|
                             @return_code = data.read_long
                         end
-                    
+
                         ch.on_request("exit-signal") do |c, data|
                             @return_signal = data.read_long
                         end
 
-                    end.wait    
+                        ch.request_pty do |ch, success|
+                            if success
+                                CCSH::Utils.debug("pty successfully obtained for #{@hostname}")
+                            else
+                                CCSH::Utils.debug("pty unsuccessfully obtained for #{@hostname}")
+                            end
+                        end
+
+                        ch.exec @command do |ch, success|
+                            raise "Could execute command #{command} on #{host}" unless success
+                        end
+                    end.wait
                 end
 
                 return self
