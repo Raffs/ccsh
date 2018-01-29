@@ -16,6 +16,7 @@ defaults:
   user: root
   password: 123456
   private_key: ~/.ssh/id_rsa
+  sudo_enabled: true
   ssh_options:
     - '-O defaults'
     - '-V'
