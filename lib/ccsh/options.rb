@@ -80,8 +80,7 @@ module CCSH
                 end
 
                 opts.on("--version", "Display version") do |v|
-                    build = "build #{CCSH::BUILD_NUMBER}" if CCSH::BUILD_NUMBER != nil
-                    puts "CCSH version #{CCSH::VERSION} #{build}"
+                    puts "CCSH version #{CCSH::VERSION}"
                     exit
                 end
             end

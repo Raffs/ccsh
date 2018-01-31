@@ -6,7 +6,6 @@ require 'ccsh/version'
 Gem::Specification.new do |s|
     s.name        = 'ccsh'
     s.version     = CCSH::VERSION
-    s.date        = '2018-01-19'
     s.summary     = 'Interactive multiple client shell command'
     s.description = 'Interactive shell console, connected into multiple clients'
     s.authors     = ['Rafael Silva - raffs']
