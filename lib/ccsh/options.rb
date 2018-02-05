@@ -18,7 +18,6 @@ module CCSH
             options.output      = nil
             options.show_hosts  = false
             options.max_threads = 0
-            options.ask_pass    = false
 
             # open parser
             opt_parser = OptionParser.new do |opts|
@@ -54,10 +53,6 @@ module CCSH
 
                 opts.on("--show-hosts", "Output the filtered hosts") do |show_hosts|
                     options.show_hosts = show_hosts
-                end
-
-                opts.on("--ask-pass", "Ask password when using sudo") do |ask_pass|
-                    options.ask_pass = ask_pass
                 end
 
                 opts.on("-t", "--max-threads MAX_THREADS",

@@ -37,7 +37,7 @@ module CCSH
                     host.ssh_options = CCSH::Utils.get_options('ssh_options', h, @defaults['ssh_options'])
                     host.timeout = CCSH::Utils.get_options('timeout', h, @defaults['timeout'])
                     host.sudo_enabled = CCSH::Utils.get_options('sudo_enabled', h, @defaults['sudo_enabled'])
-                    host.sudo_password = CCSH::Utils.get_options('sudo_passwors', h, @defaults['sudo_password'])
+                    host.sudo_password = CCSH::Utils.get_options('sudo_password', h, @defaults['sudo_password'])
 
                     # define the password if the sudo_password is not set
                     host.sudo_password = host.password if host.sudo_password == nil
