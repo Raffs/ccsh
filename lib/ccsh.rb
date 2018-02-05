@@ -15,12 +15,36 @@ module CCSH
             ENV['CCSH_DEBUG']   = "true" if options[:debug]
             ENV['CCSH_VERBOSE'] = "true" if options[:verbose]
 
-            raise "You must to specified a hostname or group" if options[:targets].empty?
+            if options[:targets].empty?
+                error_msg = "You must specify a target hostname or group name."
+
+                puts error_msg
+                puts "Example:"
+                puts "    'ccsh databases' - select all servers from the database group"
+                puts "    'ccsh all'       - select all defined servers"
+                puts "Please run 'ccsh --help' for details"
+                puts ""
+
+                raise error_msg
+            end
 
             filename = options[:hosts]
             targets = options[:targets]
-
             hosts = CCSH::Hosts.new.parser!(filename).filter_by(targets)
+
+            # validate and display pretty message if no hosts was found to the
+            # given target.
+            if hosts.empty?
+                error_msg = "Could not found any hosts that matches the given target(s): '#{targets.join(', ')}'"
+                puts error_msg
+
+                puts "Here are some groups found on the file: '#{filename}'"
+                CCSH::Utils.show_groups(CCSH::Hosts.new.parser!(filename).filter_by('all'))
+
+                puts ""
+                raise error_msg
+            end
+
             self.start_cli(hosts, options)
 
         rescue Exception => e
@@ -28,8 +52,8 @@ module CCSH
                 CCSH::Utils.debug "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
                 CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
 
-                puts "An error occur and system exit with the following message: "
-                puts "  #{e.message}"
+                STDERR.puts "An error occur and system exit with the following message: "
+                STDERR.puts "  #{e.message}"
 
                 exit!
             end

@@ -50,6 +50,8 @@ module CCSH
             puts
         end
 
+        ##
+        # Display host display_hosts_verbosity
         def self.display_hosts_verbosity(hosts)
             hosts.each do |host|
                 CCSH::Utils::verbose("sudo mode enable to host: #{host.hostname}") if host.sudo_enabled
@@ -58,7 +60,24 @@ module CCSH
         end
 
         ##
-        #
+        # Show at least 10 groups names
+        def self.show_groups(hosts)
+            hosts_groups = []
+            hosts.each do |host|
+                if host.groups != nil
+                    host.groups.each do |gname|
+                        hosts_groups.push(gname) unless hosts_groups.include?(gname)
+                    end
+                end
+            end
+
+            hosts_groups.slice(0, 10).each { |gname| puts "  - #{gname}" }
+            puts "Example: ccsh #{hosts_groups[0]}" unless hosts_groups[0] == nil
+            puts "Example: ccsh #{hosts_groups.slice(0,2).join(' ')}" unless hosts_groups.slice(0,2) == nil
+        end
+
+        ##
+        # validate the ssh connection before start the ccsh console
         def self.valid_ssh(options)
             return true
         end

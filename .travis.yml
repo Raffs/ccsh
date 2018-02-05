@@ -6,3 +6,11 @@ rvm:
 before_install:
   - gem update --system
   - gem --version
+deploy:
+  provider: rubygems
+  gem: ccsh
+  gemspec: ccsh.gemspec
+  api_key:
+    secure: NHrbY/CErel2t7Y4sCH3R79tWDkUjm8OrKX49ZgEndIHqxuforAbWDXYPOzuzTsaAg4M+RuQqPz0Ii5CowDRFUAgn4hiF6AdLCxd0iNDpoahrKnOSPm6vd16+lX30Lt70qdR2E/8/71RCadr1byC9LlTKb5D0lBp30x5Dloo13HY2E4w/NGjafavnyZPMQotzBL8jr7uO7G1P1gQYJDz8I8mza3PMcVPbw53hHQkfhSYkC9zCe3VfqnH9EfuqzADOaq6ZA+SI+jBgRLtP7WKqF6gHqug4iqX6IrWTlHe7aF305lSlelQ9qHh2doexOR6RhP5Vzp85M1ojf+cUXxd3fznvqFsBG0z/4d7Am4swULii1AsynwoR2JWzvjytSfCzCLheitREWSRjfpxEePvezWekX8iolBxTNfsNQ3JMOHbQp6yQGyPBm0TFi4qWJA8Mx+eIVxUASaTDPdrVS9mwsA8+vBWXoWv8Eucq53o3bKs0O9mkwQpO3ZqWujA0bq2n6dUv0YbbCLpILHp3VLExTSHR+DMV3h3iSvUlXku6Y4W1PSwpDVNXyrz2SCPy16+jD7q2Gytew8MSpwB30xWMF0yfcmSmF7PmgAU1mR0AX6lTsq5ktLi0f/PgWumM36JdUlV6dwz1DG0Tk/h0bSyv3KZhxEQBkBgQB75JjneEsw=
+  on:
+    tags: true
