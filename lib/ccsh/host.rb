@@ -27,6 +27,7 @@ module CCSH
 
         def run(command)
             CCSH::Utils.debug("Running command '#{command}' on #{@hostname}")
+
             command = CCSH::SSH.start do |ssh|
                 ssh.user = @user
                 ssh.port = @port

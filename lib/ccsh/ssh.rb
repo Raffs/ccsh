@@ -55,9 +55,29 @@ module CCSH
                 Net::SSH.start(@hostname, @user, @options) do |ssh|
                     ssh.open_channel do |ch|
                         ch.on_data do |c, data|
-                            if @enable_sudo && data =~ /^\[sudo\] password for /
-                                # send the password
-                                ch.send_data "#{@sudo_password}\n"
+
+                            if data =~ /^\[sudo\] password for /
+
+                                if @enable_sudo
+                                    if @sudo_password != nil
+                                        ch.send_data "#{@sudo_password}\n"
+                                    else
+                                        msg = """The server #{@hostname} asked for user password
+                                            by the 'password' or 'sudo_password' option was not defined.
+                                        """.gsub("\n", ' ').squeeze(' ')
+
+                                        STDERR.puts "[WARN] #{msg}"
+                                        ch.send_data "\x03"
+                                    end
+                                else
+                                    msg = """The server #{@hostname} asked for user password
+                                        the sudo_enabled option was not allowed
+                                        skipping this hosts setup
+                                    """.gsub("\n", ' ').squeeze(' ')
+
+                                    STDERR.puts "[WARN] #{msg}"
+                                    ch.send_data "\x03"
+                                end
                             else
                                 @stdout << data
                             end

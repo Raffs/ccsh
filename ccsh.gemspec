@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
                     Dir['lib/**/*.rb']
     s.executables = s.files.grep(%r{^bin/ccsh}) { |f| File.basename(f) }
 
+    s.post_install_message = "Thanks for installing CCSH!"
+
     s.required_ruby_version = "~> 2.0"
 
     # system dependencies

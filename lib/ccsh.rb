@@ -53,7 +53,7 @@ module CCSH
                 CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
 
                 STDERR.puts "An error occur and system exit with the following message: "
-                STDERR.puts "  #{e.message}"
+                STDERR.puts "  #{e.message.gsub("\n", ' ').squeeze(' ')}"
 
                 exit!
             end
@@ -125,26 +125,10 @@ module CCSH
                             threads = []
 
                             batch_hosts.each do |host|
-                                if command =~ /^(.*)+sudo/
+                                if command =~ /^([ ]*)sudo/
                                     if host.sudo_enabled != true
-                                        msg = "WARN: You cannot run sudo on the host #{host.hostname}, please enable sudo mode for this hosts"
-                                        CCSH::Utils.verbose(msg)
+                                        STDERR.puts "WARN: You cannot run sudo on the host #{host.hostname}, please enable sudo mode for this hosts"
                                         next
-                                    end
-
-                                    if host.sudo_password == nil
-                                        if options[:ask_pass]
-                                            printf "[#{host.hostname}] Enter sudo password for #{host.user}: "
-                                            passwd = STDIN.noecho(&:gets).chomp
-
-                                            host.sudo_password = passwd
-                                        else
-                                            error_msg = """
-                                                [#{host.hostname}] sudo password was not provided use (--ask-pass) to ask the sudo password
-                                            """
-
-                                            raise error_msg.gsub!(/\s+/, ' ')
-                                        end
                                     end
                                 end
 
