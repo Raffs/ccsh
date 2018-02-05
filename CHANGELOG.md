@@ -8,6 +8,7 @@ All notables changes to the CCSH project will be documented in this file
 
 #### Added
 
+- (Issue: [#18]) - Investigate why the sudo command it's taking to long to execute.
 - (Issue: [#21]) - Added validation code to empty targets and filters.
 - (Issue: [#19]) - Improve the CI Process (tag, PR's, branches and travis deployments).
 - (Issue: [#16]) - Add a enable_sudo, sudo_user and sudo_password options.
@@ -64,5 +65,6 @@ All notables changes to the CCSH project will be documented in this file
 [#13]: https://github.com/raffs/ccsh/issues/13
 [#16]: https://github.com/raffs/ccsh/issues/16
 [#17]: https://github.com/raffs/ccsh/issues/17
+[#18]: https://github.com/raffs/ccsh/issues/18
 [#19]: https://github.com/raffs/ccsh/issues/19
 [#21]: https://github.com/raffs/ccsh/issues/21
