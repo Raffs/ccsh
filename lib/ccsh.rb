@@ -15,12 +15,36 @@ module CCSH
             ENV['CCSH_DEBUG']   = "true" if options[:debug]
             ENV['CCSH_VERBOSE'] = "true" if options[:verbose]
 
-            raise "You must to specified a hostname or group" if options[:targets].empty?
+            if options[:targets].empty?
+                error_msg = "You must specify a target hostname or group name."
+
+                puts error_msg
+                puts "Example:"
+                puts "    'ccsh databases' - select all servers from the database group"
+                puts "    'ccsh all'       - select all defined servers"
+                puts "Please run 'ccsh --help' for details"
+                puts ""
+
+                raise error_msg
+            end
 
             filename = options[:hosts]
             targets = options[:targets]
-
             hosts = CCSH::Hosts.new.parser!(filename).filter_by(targets)
+
+            # validate and display pretty message if no hosts was found to the
+            # given target.
+            if hosts.empty?
+                error_msg = "Could not found any hosts that matches the given target(s): '#{targets.join(', ')}'"
+                puts error_msg
+
+                puts "Here are some groups found on the file: '#{filename}'"
+                CCSH::Utils.show_groups(CCSH::Hosts.new.parser!(filename).filter_by('all'))
+
+                puts ""
+                raise error_msg
+            end
+
             self.start_cli(hosts, options)
 
         rescue Exception => e
@@ -28,8 +52,8 @@ module CCSH
                 CCSH::Utils.debug "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
                 CCSH::Utils.verbose "Backtrace:\n\t#{e.backtrace.join("\n\t")}\n\n"
 
-                puts "An error occur and system exit with the following message: "
-                puts "  #{e.message}"
+                STDERR.puts "An error occur and system exit with the following message: "
+                STDERR.puts "  #{e.message.gsub("\n", ' ').squeeze(' ')}"
 
                 exit!
             end
@@ -101,26 +125,10 @@ module CCSH
                             threads = []
 
                             batch_hosts.each do |host|
-                                if command =~ /^(.*)+sudo/
+                                if command =~ /^([ ]*)sudo/
                                     if host.sudo_enabled != true
-                                        msg = "WARN: You cannot run sudo on the host #{host.hostname}, please enable sudo mode for this hosts"
-                                        CCSH::Utils.verbose(msg)
+                                        STDERR.puts "WARN: You cannot run sudo on the host #{host.hostname}, please enable sudo mode for this hosts"
                                         next
-                                    end
-
-                                    if host.sudo_password == nil
-                                        if options[:ask_pass]
-                                            printf "[#{host.hostname}] Enter sudo password for #{host.user}: "
-                                            passwd = STDIN.noecho(&:gets).chomp
-
-                                            host.sudo_password = passwd
-                                        else
-                                            error_msg = """
-                                                [#{host.hostname}] sudo password was not provided use (--ask-pass) to ask the sudo password
-                                            """
-
-                                            raise error_msg.gsub!(/\s+/, ' ')
-                                        end
                                     end
                                 end
 

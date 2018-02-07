@@ -12,10 +12,8 @@ ccsh will read the servers from the **host** file and create an interactive shel
 for running commands on all selected servers
 
 Project Information:
-* **Status:** Development
-* **Author:** Rafael Oliveira Silva
-* **Blog:** [raffs.com.br](https://raffs.com.br/)
 * **Rubygem**: [gems/ccsh](https://rubygems.org/gems/ccsh)
+* **Documentation** [raffs.github.io/ccsh](https://raffs.github.io/ccsh)
 
 ## Setup
 

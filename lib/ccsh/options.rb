@@ -18,7 +18,6 @@ module CCSH
             options.output      = nil
             options.show_hosts  = false
             options.max_threads = 0
-            options.ask_pass    = false
 
             # open parser
             opt_parser = OptionParser.new do |opts|
@@ -56,10 +55,6 @@ module CCSH
                     options.show_hosts = show_hosts
                 end
 
-                opts.on("--ask-pass", "Ask password when using sudo") do |ask_pass|
-                    options.ask_pass = ask_pass
-                end
-
                 opts.on("-t", "--max-threads MAX_THREADS",
                         "Define the maxinum number of threads (by default: the ammount of selected hosts)") do |max_threads|
 
@@ -80,8 +75,7 @@ module CCSH
                 end
 
                 opts.on("--version", "Display version") do |v|
-                    build = "build #{CCSH::BUILD_NUMBER}" if CCSH::BUILD_NUMBER != nil
-                    puts "CCSH version #{CCSH::VERSION} #{build}"
+                    puts "CCSH version #{CCSH::VERSION}"
                     exit
                 end
             end
