@@ -1,0 +1,46 @@
+---
+
+# Simple hosts file example
+defaults:
+
+  # Define the SSH connection port for all hosts, except for those one
+  # that override the configuration on the hosts-level
+  port: 22
+
+  # Define the SSH connection user for all hosts, except for those one
+  # that override the configuration on the hosts-level
+  user: my_user
+
+  # Define the SSH connection user for all hosts, except for those one
+  # that override the configuration on the hosts-level
+  sudo_enabled: true
+
+  # Define the SSH options supported for the CCSH.
+  # The following are the current supported options
+  ssh_options:
+    timeout: 720
+    host_key: 'ssh-rsa'
+
+# Define all the hosts for this environment
+hosts:
+
+  # Node 01
+  - name: Node01
+    hostname: node01.example.com
+    groups:
+      - production
+      - cluster_nodes
+
+  # Node 02
+  - name: Node02
+    hostname: node02.example.com
+    groups:
+      - production
+      - cluster_nodes
+
+  # Example of Host that will override the global configuration
+  - name: NodeManager
+    hostname: manager.example.com
+    port: 2223
+    user: manager
+    sudo_enabled: false
