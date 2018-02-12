@@ -46,7 +46,7 @@ defaults:
   port: 22
   user: user
   password: password
-  private_key: ~/.ssh/id_rsa
+  sudo_enabled: true
   ssh_options:
     timeout: 720
     host_key: 'ssh-rsa'
@@ -65,6 +65,13 @@ hosts:
     groups:
       - production
       - dbserver
+
+  # Example of Host that will override the global configuration
+  - name: NodeManager
+     hostname: manager.example.com
+     port: 2223
+     user: manager
+     sudo_enabled: false
 ```
 
 ### Start the console
@@ -109,9 +116,9 @@ gem build ccsh.gemspec
 
 ### Installing local gem
 
-To install the generated gem package run:
+To generate the GEM and Install locally run:
 ```sh
-gem install_local gem-VERSION.gem
+rake deploy_local gem-VERSION.gem
 ```
 
 Optionally you can run the *build* and *install locally* with the `rake deploy_local`
