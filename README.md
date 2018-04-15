@@ -13,7 +13,7 @@ for running commands on all selected servers
 
 Project Information:
 * **Rubygem**: [gems/ccsh](https://rubygems.org/gems/ccsh)
-* **Documentation** [raffs.github.io/ccsh](https://raffs.github.io/ccsh)
+* **Documentation** [github/wiki](https://github.com/raffs/ccsh/wiki)
 
 ## Setup
 
